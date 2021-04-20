@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="video.mapper">
+
+	<insert id="createRoom" parameterType="videoDto" >
+		INSERT INTO VIDEOROOMS
+		VALUES(VIDEONOSEQ.NEXTVAL, #{roomid}, #{mentorid}, #{menteeid}, SYSDATE)
+	</insert>
+
+	<select id="showVideoRoom" resultType="videoDto" >
+		SELECT ROOMNO, ROOMID, MENTORID, MENTEEID, REGDATE 
+		FROM VIDEOROOMS
+		WHERE MENTEEID = #{menteeid}
+		ORDER BY REGDATE DESC
+	
+	</select>
+
+
+</mapper>

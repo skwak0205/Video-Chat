@@ -1,0 +1,16 @@
+@charset "UTF-8";
+
+* {
+	display: grid;
+	place-content: center;
+}
+
+.room {
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 10px;
+}
+
+.room input {
+	margin-bottom: 10px;
+}

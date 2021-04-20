@@ -15,6 +15,8 @@ const { username, roomId } = Qs.parse(location.search, {
 	ignoreQueryPrefix: true
 });
 
+history.replaceState({}, null, location.pathname);
+
 var peer = new Peer();
 
 const peers = {};

@@ -5,36 +5,42 @@
 <title>Insert title here</title>
 
 <script type="text/javascript">
-	function guid() {
-		function s4() {
-			return ((1 + Math.random()) * 0x10000 | 0).toString(16)
-					.substring(1);
-		}
-		return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4()
-				+ s4() + s4();
+	function registerForm(){
+		location.href="user.do?command=registerform";
 	}
 
-	function show_uuid() {
-		document.getElementById('uuid').value = guid();
-	}
-	
-	function goToVideo(){
-		var username = document.getElementsByName('username')[0].value;
-		var roomId = document.getElementsByName('roomId')[0].value;
-		
-		location.href="video.html?username="+username+"&roomId="+roomId;
-	}
 </script>
+
 
 </head>
 <body>
 
+	<form action="user.do" method="post">
+		<input type="hidden" name="command" value="login" />
+		
+		<table border=1>
+			<col width="100" />
+			<col width="100" />
+			
+			<tr>
+				<th>ID</th>
+				<td><input type="text" name="userid" /></td>
+			</tr>
+			
+			<tr>
+				<th>PW</th>
+				<td><input type="password" name="userpw" /></td>
+			</tr>
+			
+			<tr>
+				<td colspan="2">
+					<input type="submit" value="login" />
+					<input type="button" value="register" onclick="registerForm();" />
+				</td> 
+			</tr>
+		</table>
+	</form>
 
-		<input type='text' name='username' placeholder='이름을 쓰세요' />
-		<input type='text' size='40' name='roomId' id='uuid' />
-	
-		<button onclick='show_uuid()'>방 생성하기</button>
-		<button onclick='goToVideo()'>시작하기</button>
 
 </body>
 </html>

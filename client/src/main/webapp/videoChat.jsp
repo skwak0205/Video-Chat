@@ -1,0 +1,104 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    
+<% request.setCharacterEncoding("UTF-8"); %>
+<% response.setContentType("text/html; charset=UTF-8"); %>
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+	<link rel="stylesheet" href="resources/css/style.css">
+	<link rel="stylesheet"
+		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+	<link
+		href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+		rel="stylesheet"
+		integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+		crossorigin="anonymous">
+	
+	
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+		crossorigin="anonymous"></script>
+	
+	<script type="text/javascript"
+		src="http://localhost:5000/socket.io/socket.io.js"></script>
+	
+	<script src="https://unpkg.com/peerjs@1.3.1/dist/peerjs.min.js"></script>
+
+
+</head>
+<body>
+	<div class="main">
+		<div class="main__left">
+			<div class="main__videos">
+				<div id="video-grid"></div>
+			</div>
+
+			<div class="main__controls">
+				<div class="main__controls__block">
+					<div onclick="muteUnmute()"
+						class="main__controls__button main__mute_button">
+						<i class="fas fa-microphone"></i> <span>Mute</span>
+					</div>
+
+					<div onclick="playStop()"
+						class="main__controls__button main__video_button">
+						<i class="fas fa-video"></i> <span>Stop Video</span>
+					</div>
+				</div>
+
+				<div class="main__controls__block">
+					<div class="main__controls__button">
+						<i class="fas fa-shield-alt"></i> <span>Security</span>
+					</div>
+
+					<div class="main__controls__button">
+						<i class="fas fa-user-friends"></i> <span>Participants</span>
+					</div>
+
+					<div class="main__controls__button">
+						<i class="fas fa-comment-alt"></i> <span>Chat</span>
+					</div>
+				</div>
+
+				<div class="main__controls__block">
+					<div id="leave-btn" class="main__controls__button">
+						<span class="leave_meeting">Leave Meeting</span>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="main__right">
+			<div class="main__header">
+				<h5>Chat</h5>
+			</div>
+
+			<div class="main__chat_window">
+				<div class="chat-messages"></div>
+
+			</div>
+
+			<div class="main__message_container">
+				<form id="chat-form">
+					<input id="msg" type="text" placeholder="Enter Message" required
+						autocomplete="off" />
+						
+					<button class="btn">
+						<i class="fas fa-paper-plane"></i> Send
+					</button>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.10.1/qs.min.js"></script>
+	<script type="text/javascript" src="resources/js/script.js"></script>
+</body>
+</html>
