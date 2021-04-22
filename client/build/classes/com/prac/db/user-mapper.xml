@@ -8,6 +8,10 @@
 		WHERE USERID = #{userid} AND USERPW = #{userpw}
 	</select>
 
-
+	<select id="mentorList" resultType="userDto" >
+		SELECT USERID, USERNAME, USERADDR, USEREMAIL
+		FROM USERS
+		WHERE USERROLE = 'MENTOR'
+	</select>
 
 </mapper>

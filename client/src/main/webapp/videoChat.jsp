@@ -10,7 +10,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
-	<link rel="stylesheet" href="resources/css/style.css">
+	<link rel="stylesheet" href="resources/css/video.css">
 	<link rel="stylesheet"
 		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 	<link
@@ -29,6 +29,8 @@
 		src="http://localhost:5000/socket.io/socket.io.js"></script>
 	
 	<script src="https://unpkg.com/peerjs@1.3.1/dist/peerjs.min.js"></script>
+	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 
 
 </head>
@@ -99,6 +101,6 @@
 
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.10.1/qs.min.js"></script>
-	<script type="text/javascript" src="resources/js/script.js"></script>
+	<script type="text/javascript" src="resources/js/video.js"></script>
 </body>
 </html>

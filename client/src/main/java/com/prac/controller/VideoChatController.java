@@ -51,7 +51,7 @@ public class VideoChatController extends HttpServlet {
 			
 			if (res > 0) {
 
-				jsResponse(response, "방 생성 성공", "video.do?command=joinRoom&username="+mentorid+"&roomId="+roomid);
+				jsResponse(response, "방 생성 성공", "video.do?command=joinRoom&userId="+mentorid+"&roomId="+roomid);
 				
 			} else {
 				jsResponse(response, "방 생성 실패", "video.do?command=videoCreate");

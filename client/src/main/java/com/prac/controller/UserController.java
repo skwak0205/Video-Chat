@@ -11,8 +11,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.prac.biz.ChatBiz;
 import com.prac.biz.UserBiz;
 import com.prac.biz.VideoBiz;
+import com.prac.dto.ChatDto;
 import com.prac.dto.UserDto;
 import com.prac.dto.VideoDto;
 
@@ -32,6 +34,7 @@ public class UserController extends HttpServlet {
 		
 		UserBiz biz = new UserBiz();
 		VideoBiz videoBiz = new VideoBiz();
+		ChatBiz chatBiz = new ChatBiz();
 		HttpSession session = request.getSession();
 		
 		
@@ -45,7 +48,7 @@ public class UserController extends HttpServlet {
 			
 			UserDto user = biz.login(dto);
 			
-			System.out.println(dto.getUserid());
+			//System.out.println(dto.getUserid());
 			
 			if (user != null) {
 				session.setAttribute("user", user);
@@ -54,11 +57,17 @@ public class UserController extends HttpServlet {
 				if (user.getUserrole().equals("MENTEE")) {
 					List<VideoDto> list = videoBiz.showVideoRoom(user.getUserid());
 					
+					List<UserDto> mentorList = biz.mentorList();
+					
 					request.setAttribute("list", list);
+					request.setAttribute("mentorList", mentorList);
 					
 					dispatch(request, response, "mentee.jsp");
 				
 				} else if (user.getUserrole().equals("MENTOR")) {
+					List<ChatDto> list = chatBiz.showChatRoom(user.getUserid());
+					
+					request.setAttribute("list", list);
 										
 					dispatch(request, response, "mentor.jsp");
 				}
@@ -70,7 +79,7 @@ public class UserController extends HttpServlet {
 			session.invalidate();
 			response.sendRedirect("index.html");
 		
-		} 
+		}
 	
 	}
 

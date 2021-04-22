@@ -1,5 +1,7 @@
 package com.prac.biz;
 
+import java.util.List;
+
 import com.prac.dao.UserDao;
 import com.prac.dto.UserDto;
 
@@ -8,5 +10,9 @@ public class UserBiz {
 	
 	public UserDto login(UserDto dto) {
 		return dao.login(dto);
+	}
+	
+	public List<UserDto> mentorList() {
+		return dao.mentorList();
 	}
 }

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="chat.mapper">
+	<insert id="createChat" parameterType="chatDto" >
+		INSERT INTO CHATROOMS
+		VALUES(CHATNOSEQ.NEXTVAL, #{roomid}, #{creatorid}, #{guestid}, SYSDATE)
+	</insert>
+	
+	<select id="checkChatRoom" parameterType="chatDto" resultType="chatDto">
+		SELECT ROOMID, CREATORID, GUESTID
+		FROM CHATROOMS
+		WHERE ROOMID = #{roomid}
+	</select>
+	
+	<select id="showMessage" resultType="messageDto" >
+		SELECT SENDERID, MESSAGE, SENDDATE 
+		FROM CHATMESSAGES
+		WHERE ROOMID = #{roomid}
+		ORDER BY SENDDATE ASC
+	</select>
+	
+	<select id="showChatRoom" resultType="chatDto" >
+		SELECT ROOMID, CREATORID, REGDATE
+		FROM CHATROOMS
+		WHERE GUESTID = #{guestid}
+	</select>
+	
+	<insert id="saveMsg" parameterType="messageDto" >
+		INSERT INTO CHATMESSAGES
+		VALUES(CHATSEQ.NEXTVAL, #{roomid}, #{senderid}, #{message}, #{senddate})
+	</insert>
+</mapper>

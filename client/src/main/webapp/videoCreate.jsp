@@ -16,7 +16,7 @@ response.setContentType("text/html; charset=UTF-8");
 	
 	<link rel="stylesheet" href="resources/css/main.css">
 	
-	<script type="text/javascript" src="resources/js/main.js"></script>
+	<script type="text/javascript" src="resources/js/createVideo.js"></script>
 
 </head>
 

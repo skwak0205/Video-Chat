@@ -1,5 +1,8 @@
 package com.prac.dao;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 
 import com.prac.dto.UserDto;
@@ -16,5 +19,15 @@ public class UserDao extends SqlMapConfig {
 		}
 		
 		return user;
+	}
+	
+	public List<UserDto> mentorList() {
+		List<UserDto> list = new ArrayList<UserDto>();
+		
+		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
+			list = session.selectList(namespace+"mentorList");
+		}
+		
+		return list;
 	}
 }

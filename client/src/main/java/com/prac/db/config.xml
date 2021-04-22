@@ -8,6 +8,10 @@
 		<typeAlias type="com.prac.dto.UserDto" alias="userDto" />
 		
 		<typeAlias type="com.prac.dto.VideoDto" alias="videoDto" />
+		
+		<typeAlias type="com.prac.dto.ChatDto" alias="chatDto" />
+		
+		<typeAlias type="com.prac.dto.ChatMessageDto" alias="messageDto" />
 	</typeAliases>
 
 
@@ -27,6 +31,8 @@
   	<mapper resource="com/prac/db/user-mapper.xml" />
   	
   	<mapper resource="com/prac/db/video-mapper.xml" />
+  	
+  	<mapper resource="com/prac/db/chat-mapper.xml" />
   </mappers>
   
 </configuration>
