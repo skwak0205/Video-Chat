@@ -1,7 +1,7 @@
 const users = [];
 
-const userJoin = (userId, username, roomId) => {
-  const user = { userId, username, roomId };
+const userJoin = (_id, userId, roomId) => {
+  const user = { _id, userId, roomId };
 
   users.push(user);
 
@@ -9,7 +9,7 @@ const userJoin = (userId, username, roomId) => {
 };
 
 const getCurrentUser = (id) => {
-  return users.find((user) => user.userId === id);
+  return users.find((user) => user._id === id);
 };
 
 module.exports = {

@@ -1,5 +1,4 @@
 const express = require('express');
-//const { v4: uuidV4 } = require('uuid');
 const cors = require('cors');
 const { userJoin, getCurrentUser, userLeave } = require('./utils/users');
 const formatMessage = require('./utils/messages');
@@ -22,44 +21,76 @@ const peerServer = ExpressPeerServer(server, {
 
 app.use(cors());
 
+app.get('/', (req, res) => {
+  res.send('Running');
+});
+
 const botName = 'admin';
 
 io.on('connection', (socket) => {
-  socket.on('join-room', (userId, { username, roomId }) => {
-    const user = userJoin(userId, username, roomId);
-
-    //console.log(username, ' : ', userId);
+  // 화상 채팅
+  socket.on('joinVideoRoom', (_id, { userId, roomId }) => {
+    const user = userJoin(_id, userId, roomId);
 
     socket.join(user.roomId);
 
-    socket.emit('message', formatMessage(botName, '환영합니다!'));
+    socket.emit(
+      'videoMessage',
+      formatMessage(botName, `${user.userId}님 환영합니다!`)
+    );
 
-    socket.broadcast.to(roomId).emit('user-connected', userId);
+    socket.broadcast.to(roomId).emit('user-connected', _id);
 
     socket.broadcast
       .to(user.roomId)
       .emit(
-        'message',
-        formatMessage(botName, `${user.username} 님이 참석하셨습니다.`)
+        'videoMessage',
+        formatMessage(botName, `${user.userId}님이 참석하셨습니다.`)
       );
 
-    socket.on('chatMessage', (userId, msg) => {
+    socket.on('videoChatMessage', (userId, msg) => {
       const user = getCurrentUser(userId);
 
-      io.to(user.roomId).emit('message', formatMessage(user.username, msg));
+      io.to(user.roomId).emit('videoMessage', formatMessage(user.userId, msg));
     });
 
     socket.on('disconnect', () => {
-      const user = getCurrentUser(userId);
+      const user = getCurrentUser(_id);
+
       if (user) {
-        socket.broadcast.to(roomId).emit('user-disconnected', user.userId);
+        socket.broadcast.to(roomId).emit('user-disconnected', _id);
 
         io.to(user.roomId).emit(
-          'message',
-          formatMessage(botName, `${user.username} 님이 나가셨습니다.`)
+          'videoMessage',
+          formatMessage(botName, `${user.userId} 님이 나가셨습니다.`)
         );
       }
     });
+  });
+
+  // 채팅
+  socket.on('joinChatRoom', ({ userId, roomId }) => {
+    const user = userJoin(socket.id, userId, roomId);
+
+    socket.join(user.roomId);
+  });
+
+  socket.on('chatMessage', (msg, time) => {
+    const user = getCurrentUser(socket.id);
+
+    const message = { userId: user.userId, text: msg, time };
+
+    io.to(user.roomId).emit('message', message);
+  });
+
+  socket.on('disconnect', () => {
+    //const user = userLeave(socket.id);
+    // if (user) {
+    //   io.to(user.roomId).emit(
+    //     'message',
+    //     formatMessage(botName, `${user.userId}님이 채팅방을 나갔습니다.`)
+    //   );
+    // }
   });
 });
 
