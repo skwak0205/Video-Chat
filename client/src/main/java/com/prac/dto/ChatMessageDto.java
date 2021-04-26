@@ -5,19 +5,24 @@ import java.util.Date;
 public class ChatMessageDto {
 	private int seq;
 	private String roomid;
-	private String senderid;
+	private String fromid;
+	private String toid;
 	private String message;
+	private String chatread;
 	private String senddate;
 	
 	public ChatMessageDto() {
 		
 	}
 
-	public ChatMessageDto(int seq, String roomid, String senderid, String message, String senddate) {
+	public ChatMessageDto(int seq, String roomid, String fromid, String toid, String message, String chatread,
+			String senddate) {
 		this.seq = seq;
 		this.roomid = roomid;
-		this.senderid = senderid;
+		this.fromid = fromid;
+		this.toid = toid;
 		this.message = message;
+		this.chatread = chatread;
 		this.senddate = senddate;
 	}
 
@@ -37,12 +42,20 @@ public class ChatMessageDto {
 		this.roomid = roomid;
 	}
 
-	public String getSenderid() {
-		return senderid;
+	public String getFromid() {
+		return fromid;
 	}
 
-	public void setSenderid(String senderid) {
-		this.senderid = senderid;
+	public void setFromid(String fromid) {
+		this.fromid = fromid;
+	}
+
+	public String getToid() {
+		return toid;
+	}
+
+	public void setToid(String toid) {
+		this.toid = toid;
 	}
 
 	public String getMessage() {
@@ -53,6 +66,14 @@ public class ChatMessageDto {
 		this.message = message;
 	}
 
+	public String getChatread() {
+		return chatread;
+	}
+
+	public void setChatread(String chatread) {
+		this.chatread = chatread;
+	}
+
 	public String getSenddate() {
 		return senddate;
 	}
@@ -60,6 +81,8 @@ public class ChatMessageDto {
 	public void setSenddate(String senddate) {
 		this.senddate = senddate;
 	}
+
+	
 	
 	
 }

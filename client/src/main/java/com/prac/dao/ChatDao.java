@@ -60,4 +60,25 @@ public class ChatDao extends SqlMapConfig {
 		
 		return res;
 	}
+	
+	public int showUnreadMsg(ChatMessageDto dto) {
+		int res = 0;
+		
+		try(SqlSession session = getSqlSessionFactory().openSession(true)) {
+			res = session.selectOne(namespace+"Num_unreadMsg", dto);
+		}
+		
+		return res;
+		
+	}
+	
+	public int readMsg(ChatMessageDto dto) {
+		int res = 0;
+		
+		try(SqlSession session = getSqlSessionFactory().openSession(true)) {
+			res = session.update(namespace+"readMsg", dto);
+		}
+		
+		return res;
+	}
 }

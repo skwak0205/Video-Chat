@@ -15,22 +15,32 @@ response.setContentType("text/html; charset=UTF-8");
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+
 <link rel="stylesheet" href="resources/css/chat.css" />
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script src="http://localhost:5000/socket.io/socket.io.js"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.33/moment-timezone.min.js"></script>
 
 </head>
 <body>
+	<%-- <jsp:include page="chatRoom.jsp" /> --%>
+
 	<div class="wrapper">
+	
 		<div class="user-container">
-			<label for="user">대화명</label> 
+			<span style="cursor:pointer" onclick="location.href='chat.do?command=chatRoom'"><i class="fas fa-undo-alt"></i></span>
+		
+			<label for="user">From : </label> 
 			
 			<input type="text" id="userId" value="${user.userid}" readonly /> 
 				
-			<label for="guest">상대방</label> 
+			<label for="guest">To : </label> 
 			
 			<input type="text" id="guestId" value="${guestId}" readonly />
 		</div>
@@ -38,15 +48,15 @@ response.setContentType("text/html; charset=UTF-8");
 		<div class="display-container">
 		
 			<c:choose>
-				<c:when test="${empty list }">
+				<c:when test="${empty msgList }">
 					<ul class="chatting-list"></ul>
 				</c:when>
 				
 				<c:otherwise>
-					<c:forEach items="${list }" var="dto">
-						<li class=${dto.senderid == user.userid ? 'sent' : 'received' }>						
+					<c:forEach items="${msgList }" var="dto">
+						<li class=${dto.fromid == user.userid ? 'sent' : 'received' }>						
 							<span class="profile">
-		        				<span class="user">${dto.senderid}</span>
+		        				<span class="user">${dto.fromid}</span>
 						        <img
 						          class="image"
 						          src="https://placeimg.com/50/50/any"
@@ -74,7 +84,6 @@ response.setContentType("text/html; charset=UTF-8");
 		</div>
 	</div>
 
-	<script src="http://localhost:5000/socket.io/socket.io.js"></script>
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.10.1/qs.min.js"></script>
 	<script type="text/javascript" src="resources/js/chat.js"></script>

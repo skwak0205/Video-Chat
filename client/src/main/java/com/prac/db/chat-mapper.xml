@@ -6,27 +6,38 @@
 		VALUES(CHATNOSEQ.NEXTVAL, #{roomid}, #{creatorid}, #{guestid}, SYSDATE)
 	</insert>
 	
-	<select id="checkChatRoom" parameterType="chatDto" resultType="chatDto">
+	<select id="checkChatRoom" resultType="chatDto">
 		SELECT ROOMID, CREATORID, GUESTID
 		FROM CHATROOMS
 		WHERE ROOMID = #{roomid}
 	</select>
 	
 	<select id="showMessage" resultType="messageDto" >
-		SELECT SENDERID, MESSAGE, SENDDATE 
+		SELECT FROMID, TOID, MESSAGE, SENDDATE 
 		FROM CHATMESSAGES
 		WHERE ROOMID = #{roomid}
 		ORDER BY SENDDATE ASC
 	</select>
 	
 	<select id="showChatRoom" resultType="chatDto" >
-		SELECT ROOMID, CREATORID, REGDATE
+		SELECT ROOMID, CREATORID, GUESTID, REGDATE
 		FROM CHATROOMS
-		WHERE GUESTID = #{guestid}
+		WHERE CREATORID = #{guestid} OR GUESTID = #{guestid}
 	</select>
 	
 	<insert id="saveMsg" parameterType="messageDto" >
 		INSERT INTO CHATMESSAGES
-		VALUES(CHATSEQ.NEXTVAL, #{roomid}, #{senderid}, #{message}, #{senddate})
+		VALUES(CHATSEQ.NEXTVAL, #{roomid}, #{fromid}, #{toid}, #{message}, 'N', #{senddate})
 	</insert>
+	
+	<select id="Num_unreadMsg" parameterType="messageDto">
+		SELECT COUNT(CHATREAD) FROM CHATMESSAGES
+		WHERE FROMID = #{fromid} AND TOID = #{toid} AND CHATREAD = 'N'
+	</select>
+	
+	<update id="readMsg" parameterType="messageDto">
+		UPDATE CHATMESSAGES 
+		SET CHATREAD = 'Y'
+		WHERE FROMID = #{fromid} AND TOID = #{toid} AND CHATREAD = 'N'
+	</update>
 </mapper>

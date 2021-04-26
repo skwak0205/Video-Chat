@@ -3,7 +3,6 @@
  */
 'use strict';
 
-history.replaceState({}, null, location.pathname);
 
 const socket = io("http://localhost:5000");
 
@@ -13,7 +12,10 @@ const {roomId} = Qs.parse(location.search, {
 	ignoreQueryPrefix: true
 });
 
+//history.replaceState({}, null, location.pathname);
+
 const userId = document.querySelector('#userId').value;
+const guestId = document.querySelector('#guestId').value;
 const chatList = document.querySelector('.chatting-list');
 const displayContainer = document.querySelector('.display-container');
 const chatInput = document.querySelector('.chatting-input');
@@ -81,7 +83,7 @@ function outputMessage(message) {
 };
 
 function getParameterValues() {
-	return "?command=sendMsg&roomId="+roomId+"&senderId="+userId+"&text="+text+"&time="+time;
+	return "?command=sendMsg&roomId="+roomId+"&fromId="+userId+"&toId="+guestId+"&text="+text+"&time="+time;
 }
 
 $(function(){

@@ -34,9 +34,17 @@ public class ChatController extends HttpServlet {
 		ChatBiz biz = new ChatBiz();
 		HttpSession session = request.getSession();
 		
-		if(command.equals("chatting")) {
-			UserDto user = (UserDto) session.getAttribute("user");
-			String creatorId = user.getUserid();
+		UserDto user = (UserDto) session.getAttribute("user");
+		String userId = user.getUserid();
+
+		
+		if(command.equals("chatRoom")) {
+			List<ChatDto> chatRoomList = biz.showChatRoom(userId);
+					
+			request.setAttribute("chatRoomList", chatRoomList);
+			dispatch(request,response, "chatRoom.jsp");
+		
+		} else if(command.equals("chatting")) {
 			
 			String guestId = request.getParameter("guestId");
 			String roomId = request.getParameter("roomId");
@@ -44,7 +52,7 @@ public class ChatController extends HttpServlet {
 			ChatDto checkRoom = biz.checkChatRoom(roomId);
 			
 			if(checkRoom == null) {
-				ChatDto dto = new ChatDto(0, roomId, creatorId, guestId, null);
+				ChatDto dto = new ChatDto(0, roomId, userId, guestId, null);
 				int res = biz.createChat(dto);
 				
 				if (res > 0) {
@@ -54,25 +62,40 @@ public class ChatController extends HttpServlet {
 					jsResponse(response, "실패", "index.html");
 				}
 			} else {
-				List<ChatMessageDto> list = biz.showMessage(checkRoom.getRoomid());
-								
-				request.setAttribute("list", list);
+				List<ChatMessageDto> msgList = biz.showMessage(checkRoom.getRoomid());
+				
+				ChatMessageDto dto = new ChatMessageDto();
+				dto.setFromid(guestId);
+				dto.setToid(userId);
+				
+				int res = biz.readMsg(dto);
+				
+				request.setAttribute("msgList", msgList);
 				request.setAttribute("guestId", guestId);
 				dispatch(request, response, "chat.jsp");
+					
+				
+								
 			}
 			
 		} else if(command.equals("sendMsg")) {
 			String roomId = request.getParameter("roomId");
-			String senderId = request.getParameter("senderId");
+			String fromId = request.getParameter("fromId");
+			String toId = request.getParameter("toId");
 			String text = request.getParameter("text");
 			
 			String time = request.getParameter("time");
 			
-			ChatMessageDto dto = new ChatMessageDto(0, roomId, senderId, text, time);
+			ChatMessageDto dto = new ChatMessageDto(0, roomId, fromId, toId, text, null, time);
 			int res = biz.saveMsg(dto);
 			if (res <= 0) {
 				System.out.println("실패");
 			}
+		
+		} else if(command.equals("getNumMsg")) {
+			String fromId = request.getParameter("fromId");
+			System.out.println("fromId : " + fromId);
+			
 		}
 
 	}

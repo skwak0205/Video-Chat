@@ -28,4 +28,8 @@ public class ChatBiz {
 	public int saveMsg(ChatMessageDto dto) {
 		return dao.saveMsg(dto);
 	}
+	
+	public int readMsg(ChatMessageDto dto) {
+		return dao.readMsg(dto);
+	}
 }

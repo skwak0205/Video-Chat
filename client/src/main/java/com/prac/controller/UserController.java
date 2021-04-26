@@ -48,8 +48,6 @@ public class UserController extends HttpServlet {
 			
 			UserDto user = biz.login(dto);
 			
-			//System.out.println(dto.getUserid());
-			
 			if (user != null) {
 				session.setAttribute("user", user);
 				session.setMaxInactiveInterval(10 * 60);
@@ -67,7 +65,10 @@ public class UserController extends HttpServlet {
 				} else if (user.getUserrole().equals("MENTOR")) {
 					List<ChatDto> list = chatBiz.showChatRoom(user.getUserid());
 					
+					List<UserDto> menteeList = biz.menteeList();
+					
 					request.setAttribute("list", list);
+					request.setAttribute("menteeList", menteeList);
 										
 					dispatch(request, response, "mentor.jsp");
 				}
@@ -79,7 +80,7 @@ public class UserController extends HttpServlet {
 			session.invalidate();
 			response.sendRedirect("index.html");
 		
-		}
+		} 
 	
 	}
 

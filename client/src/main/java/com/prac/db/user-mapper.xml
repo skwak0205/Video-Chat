@@ -13,5 +13,11 @@
 		FROM USERS
 		WHERE USERROLE = 'MENTOR'
 	</select>
+	
+	<select id="menteeList" resultType="userDto" >
+		SELECT USERID, USERNAME, USERADDR, USEREMAIL
+		FROM USERS
+		WHERE USERROLE = 'MENTEE'
+	</select>
 
 </mapper>

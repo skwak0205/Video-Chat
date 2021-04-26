@@ -30,4 +30,14 @@ public class UserDao extends SqlMapConfig {
 		
 		return list;
 	}
+	
+	public List<UserDto> menteeList() {
+		List<UserDto> list = new ArrayList<UserDto>();
+		
+		try (SqlSession session = getSqlSessionFactory().openSession(false)) {
+			list = session.selectList(namespace+"menteeList");
+		}
+		
+		return list;
+	}
 }

@@ -11,6 +11,17 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
+<style type="text/css">
+	.chat-icon {
+		margin-left: 20px;
+		cursor:pointer;
+	}
+	
+
+</style>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+
 	<script type="text/javascript">
 		function chatting(idx, username){	
 			var mentorId = document.getElementsByName("mentorId")[idx];
@@ -23,6 +34,10 @@
 			}
 	
 		}
+		
+		function chatRoom(){
+			open("chat.do?command=chatRoom", "", "width=500, height=500");
+		}
 	
 	</script>
 
@@ -30,6 +45,8 @@
 
 <body>
 	<h1>Welcome Mentee ${user.userid}</h1>
+	
+	<span onclick="chatRoom()" class="chat-icon"><i class="fab fa-rocketchat fa-3x" ></i></span>
 	
 	<h3>화상 강의 방</h3>
 	<table border="1">
@@ -101,7 +118,7 @@
 	</table>
 	
 	
-	
+
 	<p>
 		<a href="user.do?command=logout">로그아웃</a>
 	</p>

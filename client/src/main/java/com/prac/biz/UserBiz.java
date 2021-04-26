@@ -15,4 +15,8 @@ public class UserBiz {
 	public List<UserDto> mentorList() {
 		return dao.mentorList();
 	}
+	
+	public List<UserDto> menteeList() {
+		return dao.menteeList();
+	}
 }
